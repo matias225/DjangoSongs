@@ -1,0 +1,12 @@
+# Archivos compilados de Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+# Archivos de configuración de PyCharm
+.idea/
+.idea/misc.xml
+.idea/modules.xml
+*.xml
+*.iml
+/.idea
