@@ -1,3 +1,25 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Cancion
+
+@admin.register(Cancion)
+class CancionAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'titulo',
+        'artista',
+        'popularidad',
+    )
+
+    search_fields = (
+        'titulo',
+        'artista',
+    )
+
+    list_filter = (
+        'popularidad',
+    )
+
+    ordering = (
+        'id',
+    )

@@ -10,3 +10,4 @@ __pycache__/
 *.xml
 *.iml
 /.idea
+.env

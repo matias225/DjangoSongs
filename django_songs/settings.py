@@ -1,22 +1,39 @@
 from pathlib import Path
 
+import environ
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# ============================================================
+# RUTAS DEL PROYECTO
+# ============================================================
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# ============================================================
+# VARIABLES DE ENTORNO
+# ============================================================
+
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+
+environ.Env.read_env(BASE_DIR / '.env')
+
+
+# ============================================================
+# CONFIGURACIÓN GENERAL
+# ============================================================
+
 SECRET_KEY = 'django-insecure-cambia-esta-clave-en-produccion'
 
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
 
 
-# Application definition
+# ============================================================
+# APLICACIONES
+# ============================================================
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -26,10 +43,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Aplicación principal del proyecto
+    # Aplicación principal
     'canciones',
 ]
 
+
+# ============================================================
+# MIDDLEWARE
+# ============================================================
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -42,8 +63,16 @@ MIDDLEWARE = [
 ]
 
 
+# ============================================================
+# URLS
+# ============================================================
+
 ROOT_URLCONF = 'django_songs.urls'
 
+
+# ============================================================
+# TEMPLATES
+# ============================================================
 
 TEMPLATES = [
     {
@@ -66,22 +95,35 @@ TEMPLATES = [
 ]
 
 
+# ============================================================
+# SERVIDOR
+# ============================================================
+
 WSGI_APPLICATION = 'django_songs.wsgi.application'
 
 
-# Database
-# En esta fase utilizamos SQLite temporalmente.
-# MySQL será configurado en la Fase 2.
+# ============================================================
+# BASE DE DATOS MYSQL
+# ============================================================
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+        },
     }
 }
 
 
-# Password validation
+# ============================================================
+# VALIDACIÓN DE CONTRASEÑAS
+# ============================================================
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -99,7 +141,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
+# ============================================================
+# INTERNACIONALIZACIÓN
+# ============================================================
 
 LANGUAGE_CODE = 'es'
 
@@ -110,11 +154,15 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files
+# ============================================================
+# ARCHIVOS ESTÁTICOS
+# ============================================================
 
 STATIC_URL = 'static/'
 
 
-# Default primary key field type
+# ============================================================
+# CLAVE PRIMARIA POR DEFECTO
+# ============================================================
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
