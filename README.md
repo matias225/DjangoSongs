@@ -8,14 +8,24 @@
 
 ## 3. Crear la base de datos en MySQL
 
+Si no existe la migración, o se hace algún cambio al modelo usar:
+
+`python manage.py makemigrations`
+
 ## 4. Hacer las migraciones
 
 `python manage.py migrate`
 
-## 5. Comprobar que todo funciona
+## 5. Crear un superusuario
+
+`python manage.py createsuperuser`
+
+Se puede acceder al panel de admin desde /admin
+
+## 6. Comprobar que todo funciona
 
 `python manage.py check`
 
-## 6. Correr la aplicacion
+## 7. Correr la aplicacion
 
 `python manage.py runserver`
