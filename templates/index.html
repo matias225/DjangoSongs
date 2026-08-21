@@ -41,26 +41,71 @@ Django Songs - Canciones
 
         <tbody>
         {% for cancion in canciones %}
-          <tr>
-            <td>{{ cancion.id }}</td>
-            <td>{{ cancion.titulo }}</td>
-            <td>{{ cancion.artista }}</td>
-            <td>{{ cancion.popularidad }}/10</td>
-            <td>
-              <div class="d-flex gap-2">
-                <a href="{% url 'cancion_update' cancion.id %}" class="btn btn-warning btn-sm">
-                    Editar
-                </a>
-                <form method="post" action="{% url 'cancion_delete' cancion.id %}"
-                    onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta canción?');">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger btn-sm">
-                        Eliminar
-                    </button>
+        <tr>
+          <td>{{ cancion.id }}</td>
+          <td>{{ cancion.titulo }}</td>
+          <td>{{ cancion.artista }}</td>
+          <td>{{ cancion.popularidad }}/10</td>
+          <td>
+            <div class="d-flex gap-2">
+              <a href="{% url 'cancion_update' cancion.id %}" class="btn btn-warning btn-sm">
+                Editar
+              </a>
+              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                  data-bs-target="#modalEliminar{{ cancion.id }}">
+                Eliminar
+              </button>
+            </div>
+          </td>
+        </tr>
+
+        <!-- MODAL DE CONFIRMACIÓN -->
+        <div class="modal fade" id="modalEliminar{{ cancion.id }}" tabindex="-1"
+             aria-labelledby="modalEliminarLabel{{ cancion.id }}" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <!-- ENCABEZADO -->
+              <div class="modal-header">
+                <h5 class="modal-title text-danger" id="modalEliminarLabel{{ cancion.id }}">
+                  ⚠️ Confirmar eliminación
+                </h5>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Cerrar"
+                ></button>
+              </div>
+              <!-- CONTENIDO -->
+              <div class="modal-body text-center">
+                <div class="fs-1 mb-3">
+                  🗑️
+                </div>
+                <h5 class="mb-3">¿Eliminar esta canción?</h5>
+                <p class="text-secondary mb-1">Estás a punto de eliminar:</p>
+                <p class="fw-bold text-success fs-5">"{{ cancion.titulo }}"</p>
+                <p class="text-secondary">de {{ cancion.artista }}</p>
+                <div class="alert alert-warning mt-3 mb-0">
+                  Esta acción no se puede deshacer.
+                </div>
+              </div>
+
+              <!-- BOTONES -->
+              <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  Cancelar
+                </button>
+
+                <form method="post" action="{% url 'cancion_delete' cancion.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger">
+                    🗑️ Sí, eliminar
+                  </button>
                 </form>
               </div>
-            </td>
-          </tr>
+            </div>
+          </div>
+        </div>
         {% endfor %}
         </tbody>
       </table>
