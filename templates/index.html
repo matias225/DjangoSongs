@@ -21,16 +21,12 @@ Django Songs - Canciones
       <h2 class="card-title mb-0">
         Canciones
       </h2>
-      <a
-              href="{% url 'cancion_create' %}"
-              class="btn btn-success"
-      >
+      <a href="{% url 'cancion_create' %}" class="btn btn-success">
         + Agregar canción
       </a>
     </div>
 
     {% if canciones %}
-
     <div class="table-responsive">
       <table class="table table-dark table-hover align-middle">
         <thead>
@@ -39,6 +35,7 @@ Django Songs - Canciones
             <th>Título</th>
             <th>Artista</th>
             <th>Popularidad</th>
+            <th>Acciones</th>
           </tr>
         </thead>
 
@@ -49,10 +46,23 @@ Django Songs - Canciones
             <td>{{ cancion.titulo }}</td>
             <td>{{ cancion.artista }}</td>
             <td>{{ cancion.popularidad }}/10</td>
+            <td>
+              <div class="d-flex gap-2">
+                <a href="{% url 'cancion_update' cancion.id %}" class="btn btn-warning btn-sm">
+                    Editar
+                </a>
+                <form method="post" action="{% url 'cancion_delete' cancion.id %}"
+                    onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta canción?');">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">
+                        Eliminar
+                    </button>
+                </form>
+              </div>
+            </td>
           </tr>
         {% endfor %}
         </tbody>
-
       </table>
     </div>
 

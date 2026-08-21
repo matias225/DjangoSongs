@@ -1,24 +1,12 @@
 from django import forms
-
 from .models import Cancion
-
 
 class CancionForm(forms.ModelForm):
 
     class Meta:
         model = Cancion
-
-        fields = [
-            'titulo',
-            'artista',
-            'popularidad',
-        ]
-
-        labels = {
-            'titulo': 'Título',
-            'artista': 'Artista',
-            'popularidad': 'Popularidad',
-        }
+        fields = ['titulo', 'artista', 'popularidad',]
+        labels = {'titulo': 'Título', 'artista': 'Artista', 'popularidad': 'Popularidad',}
 
         widgets = {
             'titulo': forms.TextInput(
